@@ -217,16 +217,3 @@ eshop/
 1. **Create test accounts** in the user interface
 2. **Explore the seller dashboard** to manage products
 3. **Test the admin panel** for system management
-
-## 📞 Need Help?
-
-If you encounter issues:
-
-1. Check the troubleshooting section above
-2. Ensure all prerequisites are installed
-3. Verify your environment variables are correct
-4. Check that Docker Desktop is running for Kafka
-
----
-
-**Happy coding! 🚀**
