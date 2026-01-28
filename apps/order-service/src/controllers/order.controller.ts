@@ -16,9 +16,11 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
 export const createPaymentIntent = async (
   req: any,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const { amount, sellerStripeAccountId, sessionId } = req.body;
+
+  console.log(amount);
 
   const customerAmount = Math.round(amount * 100);
   const platformFee = Math.floor(customerAmount * 0.1);
@@ -53,7 +55,7 @@ export const createPaymentIntent = async (
 export const createPaymentSession = async (
   req: any,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { cart, selectedAddressId, coupon } = req.body;
@@ -72,7 +74,7 @@ export const createPaymentSession = async (
           shopId: item.shopId,
           selectedOptions: item.selectedOptions || {},
         }))
-        .sort((a, b) => a.id.localeCompare(b.id))
+        .sort((a, b) => a.id.localeCompare(b.id)),
     );
 
     const keys = await redis.keys("payment-session:*");
@@ -90,7 +92,7 @@ export const createPaymentSession = async (
                 shopId: item.shopId,
                 selectedOptions: item.selectedOptions || {},
               }))
-              .sort((a: any, b: any) => a.id.localeCompare(b.id))
+              .sort((a: any, b: any) => a.id.localeCompare(b.id)),
           );
 
           if (existingCart === normalizedCart) {
@@ -146,7 +148,7 @@ export const createPaymentSession = async (
     await redis.setex(
       `payment-session:${sessionId}`,
       600, //10 minutes
-      JSON.stringify(sessionData)
+      JSON.stringify(sessionData),
     );
 
     return res.status(201).json({ sessionId });
@@ -159,7 +161,7 @@ export const createPaymentSession = async (
 export const verifyingPaymentSession = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const sessionId = req.query.sessionId as string;
@@ -191,7 +193,7 @@ export const verifyingPaymentSession = async (
 export const createOrder = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const stripeSignature = req.headers["stripe-signature"];
@@ -206,7 +208,7 @@ export const createOrder = async (
       event = stripe.webhooks.constructEvent(
         rawBody,
         stripeSignature,
-        process.env.STRIPE_WEBHOOK_SECRET!
+        process.env.STRIPE_WEBHOOK_SECRET!,
       );
     } catch (err: any) {
       console.error("Webhook signature verification failed.", err.message);
@@ -246,7 +248,7 @@ export const createOrder = async (
 
         let orderTotal = orderItems.reduce(
           (sum: number, p: any) => sum + p.quantity * p.sale_price,
-          0
+          0,
         );
         // Apply discount if applicable
         if (
@@ -255,7 +257,7 @@ export const createOrder = async (
           orderItems.some((item: any) => item.id === coupon.discountedProductId)
         ) {
           const discountedItem = orderItems.find(
-            (item: any) => item.id === coupon.discountedProductId
+            (item: any) => item.id === coupon.discountedProductId,
           );
           if (discountedItem) {
             const discount =
@@ -362,7 +364,7 @@ export const createOrder = async (
               ? totalAmount - coupon?.discountAmount
               : totalAmount,
             trackingUrl: `/order/${order.id}`,
-          }
+          },
         );
 
         // Create notifications for sellers
@@ -416,7 +418,7 @@ export const createOrder = async (
 export const getSellerOrders = async (
   req: any,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const shop = await prisma.shops.findUnique({
@@ -458,7 +460,7 @@ export const getSellerOrders = async (
 export const getOrderDetails = async (
   req: any,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     console.log("ffff");
@@ -533,7 +535,7 @@ export const getOrderDetails = async (
 export const updateDeliveryStatus = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { orderId } = req.params;
@@ -586,7 +588,7 @@ export const updateDeliveryStatus = async (
 export const verifyCouponCode = async (
   req: any,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const { couponCode, cart } = req.body;
@@ -606,7 +608,7 @@ export const verifyCouponCode = async (
 
     // Find matching product that includes this discount code
     const matchingProduct = cart.find((item: any) =>
-      item.discount_codes?.some((d: any) => d === discount.id)
+      item.discount_codes?.some((d: any) => d === discount.id),
     );
 
     if (!matchingProduct) {
@@ -647,7 +649,7 @@ export const verifyCouponCode = async (
 export const getUserOrders = async (
   req: any,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     const orders = await prisma.orders.findMany({
@@ -675,7 +677,7 @@ export const getUserOrders = async (
 export const getAdminOrders = async (
   req: any,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     // Fetch all orders
