@@ -144,7 +144,7 @@ const Page = () => {
                   type="text"
                   value={search}
                   onChange={(e) => setSearch(e.target.value)}
-                  placeholder="support@becodemy.com"
+                  placeholder="Your email..."
                   className="w-full px-3 py-2 outline-none bg-slate-800 text-white border border-slate-600 !rounded"
                 />
               </div>

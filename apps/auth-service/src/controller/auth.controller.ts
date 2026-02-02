@@ -177,7 +177,7 @@ export const logOutUser = async (req: any, res: Response) => {
   res.clearCookie("access_token");
   res.clearCookie("refresh_token");
 
-  res.status(201).json({
+  res.status(200).json({
     success: true,
   });
 };
@@ -318,9 +318,7 @@ export const refreshToken = async (
 ) => {
   try {
     const refreshToken =
-      req.cookies["refresh_token"] ||
-      req.cookies["seller-refresh-token"] ||
-      req.headers.authorization?.split(" ")[1];
+      req.cookies["refresh_token"] || req.cookies["seller-refresh-token"];
 
     if (!refreshToken) {
       return next(new ValidationError("Unauthorized! No refresh token."));
@@ -371,7 +369,7 @@ export const refreshToken = async (
 
     req.role = decoded.role;
 
-    return res.status(201).json({ success: true });
+    return res.status(200).json({ success: true });
   } catch (error) {
     next(error);
   }
@@ -387,7 +385,7 @@ export const getUser = async (req: any, res: Response, next: NextFunction) => {
       source: "auth-service",
     });
 
-    res.status(201).json({
+    res.status(200).json({
       success: true,
       user,
     });
@@ -407,7 +405,7 @@ export const getAdmin = async (req: any, res: Response, next: NextFunction) => {
       source: "auth-service",
     });
 
-    res.status(201).json({
+    res.status(200).json({
       success: true,
       user,
     });
@@ -693,7 +691,7 @@ export const logOutSeller = async (req: any, res: Response) => {
   res.clearCookie("seller-access-token");
   res.clearCookie("seller-refresh-token");
 
-  res.status(201).json({
+  res.status(200).json({
     success: true,
   });
 };
@@ -707,7 +705,7 @@ export const getSeller = async (
   try {
     const seller = req.seller;
 
-    res.status(201).json({
+    res.status(200).json({
       success: true,
       seller,
     });
@@ -721,7 +719,7 @@ export const logOutAdmin = async (req: any, res: Response) => {
   res.clearCookie("access_token");
   res.clearCookie("refresh_token");
 
-  res.status(201).json({
+  res.status(200).json({
     success: true,
   });
 };

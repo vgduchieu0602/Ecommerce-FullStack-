@@ -21,7 +21,7 @@ const Page = () => {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_URI}/auth/api/login-admin`,
         data,
-        { withCredentials: true }
+        { withCredentials: true },
       );
       return response.data;
     },
@@ -50,7 +50,7 @@ const Page = () => {
           </h1>
           <Input
             label="Email"
-            placeholder="support@becodemy.com"
+            placeholder="Your email..."
             {...register("email", {
               required: "Email is required",
               pattern: {
@@ -62,7 +62,7 @@ const Page = () => {
 
           <div className="mt-3">
             <Input
-              label="Password"
+              label="Your password..."
               type="password"
               placeholder="******"
               {...register("password", {

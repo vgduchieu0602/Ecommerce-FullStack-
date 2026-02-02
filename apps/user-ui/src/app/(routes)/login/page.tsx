@@ -87,7 +87,7 @@ const Login = () => {
             <label className="block text-gray-700 mb-1">Email</label>
             <input
               type="email"
-              placeholder="support@becodemy.com"
+              placeholder="Your email..."
               className="w-full p-2 border border-gray-300 outline-0 !rounded mb-1"
               {...register("email", {
                 required: "Email is required",

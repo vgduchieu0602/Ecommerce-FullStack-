@@ -49,7 +49,7 @@ const Signup = () => {
     mutationFn: async (data: FormData) => {
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_URI}/auth/api/user-registration`,
-        data
+        data,
       );
       return response.data;
     },
@@ -70,7 +70,7 @@ const Signup = () => {
         {
           ...userData,
           otp: otp.join(""),
-        }
+        },
       );
       return response.data;
     },
@@ -97,7 +97,7 @@ const Signup = () => {
 
   const handleOtpKeyDown = (
     index: number,
-    e: React.KeyboardEvent<HTMLInputElement>
+    e: React.KeyboardEvent<HTMLInputElement>,
   ) => {
     if (e.key === "Backspace" && !otp[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
@@ -143,7 +143,7 @@ const Signup = () => {
               <label className="block text-gray-700 mb-1">Name</label>
               <input
                 type="text"
-                placeholder="shahriar"
+                placeholder="Your name..."
                 className="w-full p-2 border border-gray-300 outline-0 !rounded mb-1"
                 {...register("name", {
                   required: "Name is required",
@@ -158,7 +158,7 @@ const Signup = () => {
               <label className="block text-gray-700 mb-1">Email</label>
               <input
                 type="email"
-                placeholder="support@becodemy.com"
+                placeholder="Your email..."
                 className="w-full p-2 border border-gray-300 outline-0 !rounded mb-1"
                 {...register("email", {
                   required: "Email is required",

@@ -32,14 +32,14 @@ const ProductDetails = ({ productDetails }: { productDetails: any }) => {
   const [isChatLoading, setIsChatLoading] = useState(false);
 
   const [currentImage, setCurrentImage] = useState(
-    productDetails?.images[0]?.url
+    productDetails?.images[0]?.url,
   );
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isSelected, setIsSelected] = useState(
-    productDetails?.colors?.[0] || ""
+    productDetails?.colors?.[0] || "",
   );
   const [isSizeSelected, setIsSizeSelected] = useState(
-    productDetails?.sizes?.[0] || ""
+    productDetails?.sizes?.[0] || "",
   );
   const [quantity, setQuantity] = useState(1);
   const [priceRange, setPriceRange] = useState([
@@ -55,7 +55,7 @@ const ProductDetails = ({ productDetails }: { productDetails: any }) => {
   const removeFromWishlist = useStore((state: any) => state.removeFromWishlist);
   const wishlist = useStore((state: any) => state.wishlist);
   const isWishlisted = wishlist.some(
-    (item: any) => item.id === productDetails.id
+    (item: any) => item.id === productDetails.id,
   );
 
   // Navigate to Previous Image
@@ -77,7 +77,7 @@ const ProductDetails = ({ productDetails }: { productDetails: any }) => {
   const discountPercentage = Math.round(
     ((productDetails.regular_price - productDetails.sale_price) /
       productDetails.regular_price) *
-      100
+      100,
   );
 
   const fetchFilteredProducts = async () => {
@@ -89,7 +89,7 @@ const ProductDetails = ({ productDetails }: { productDetails: any }) => {
       query.set("limit", "5");
 
       const res = await axiosInstance.get(
-        `/product/api/get-filtered-products?${query.toString()}`
+        `/product/api/get-filtered-products?${query.toString()}`,
       );
       setRecommendedProducts(res.data.products);
     } catch (error) {
@@ -111,7 +111,7 @@ const ProductDetails = ({ productDetails }: { productDetails: any }) => {
       const res = await axiosInstance.post(
         "/chatting/api/create-user-conversationGroup",
         { sellerId: productDetails?.Shop?.sellerId },
-        isProtected
+        isProtected,
       );
       router.push(`/inbox?conversationId=${res.data.conversation.id}`);
     } catch (error) {
@@ -223,7 +223,7 @@ const ProductDetails = ({ productDetails }: { productDetails: any }) => {
                         productDetails.id,
                         user,
                         location,
-                        deviceInfo
+                        deviceInfo,
                       )
                     : addToWishlist(
                         {
@@ -236,7 +236,7 @@ const ProductDetails = ({ productDetails }: { productDetails: any }) => {
                         },
                         user,
                         location,
-                        deviceInfo
+                        deviceInfo,
                       )
                 }
               />
@@ -282,7 +282,7 @@ const ProductDetails = ({ productDetails }: { productDetails: any }) => {
                             onClick={() => setIsSelected(color)}
                             style={{ backgroundColor: color }}
                           />
-                        )
+                        ),
                       )}
                     </div>
                   </div>
@@ -306,7 +306,7 @@ const ProductDetails = ({ productDetails }: { productDetails: any }) => {
                           >
                             {size}
                           </button>
-                        )
+                        ),
                       )}
                     </div>
                   </div>
@@ -362,7 +362,7 @@ const ProductDetails = ({ productDetails }: { productDetails: any }) => {
                     },
                     user,
                     location,
-                    deviceInfo
+                    deviceInfo,
                   )
                 }
               >
@@ -461,7 +461,7 @@ const ProductDetails = ({ productDetails }: { productDetails: any }) => {
             Product details of {productDetails?.title}
           </h3>
           <div
-            className="prose prose-sm text-slate-200 max-w-none"
+            className="prose prose-sm text-slate-700 max-w-none"
             dangerouslySetInnerHTML={{
               __html: productDetails?.detailed_description,
             }}

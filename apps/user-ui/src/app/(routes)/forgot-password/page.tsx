@@ -48,7 +48,7 @@ const ForgotPassword = () => {
     mutationFn: async ({ email }: { email: string }) => {
       const reponse = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_URI}/auth/api/forgot-password-user`,
-        { email }
+        { email },
       );
       return reponse.data;
     },
@@ -72,7 +72,7 @@ const ForgotPassword = () => {
       if (!userEmail) return;
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_URI}/auth/api/verify-forgot-password-user`,
-        { email: userEmail, otp: otp.join("") }
+        { email: userEmail, otp: otp.join("") },
       );
       return response.data;
     },
@@ -92,14 +92,14 @@ const ForgotPassword = () => {
       if (!password) return;
       const response = await axios.post(
         `${process.env.NEXT_PUBLIC_SERVER_URI}/auth/api/reset-password-user`,
-        { email: userEmail, newPassword: password }
+        { email: userEmail, newPassword: password },
       );
       return response.data;
     },
     onSuccess: () => {
       setStep("email");
       toast.success(
-        "Password reset successfully! Please login with your new password."
+        "Password reset successfully! Please login with your new password.",
       );
       setServerError(null);
       router.push("/login");
@@ -125,7 +125,7 @@ const ForgotPassword = () => {
 
   const handleOtpKeyDown = (
     index: number,
-    e: React.KeyboardEvent<HTMLInputElement>
+    e: React.KeyboardEvent<HTMLInputElement>,
   ) => {
     if (e.key === "Backspace" && !otp[index] && index > 0) {
       inputRefs.current[index - 1]?.focus();
@@ -167,7 +167,7 @@ const ForgotPassword = () => {
                 <label className="block text-gray-700 mb-1">Email</label>
                 <input
                   type="email"
-                  placeholder="support@becodemy.com"
+                  placeholder="Your email..."
                   className="w-full p-2 border border-gray-300 outline-0 !rounded mb-1"
                   {...register("email", {
                     required: "Email is required",

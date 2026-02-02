@@ -4,7 +4,7 @@ import { getUserActivity } from "./fetch-user-activity";
 import { preProcessData } from "../utils/preProcessData";
 
 // Set CPU backend for lightweight operation
-tf.setBackend('cpu');
+tf.setBackend("cpu");
 
 const EMBEDDING_DIM = 50;
 
@@ -34,7 +34,7 @@ async function fetchUserActivity(userId: string): Promise<UserAction[]> {
 
 export const recommendProducts = async (
   userId: string,
-  allProducts: any
+  allProducts: any,
 ): Promise<string[]> => {
   const userActions: UserAction[] = await fetchUserActivity(userId);
   if (userActions.length === 0) return [];
@@ -117,12 +117,12 @@ export const recommendProducts = async (
   // convert user and product  interactions into tensors for training
   const userTensor = tf.tensor1d(
     interactions.map((d) => userMap[d.userId] ?? 0),
-    "int32"
+    "int32",
   );
 
   const productTensor = tf.tensor1d(
     interactions.map((d) => productMap[d.productId] ?? 0),
-    "int32"
+    "int32",
   );
 
   const weightLabels = tf.tensor2d(
@@ -141,7 +141,7 @@ export const recommendProducts = async (
           return [0];
       }
     }),
-    [interactions.length, 1]
+    [interactions.length, 1],
   );
 
   await model.fit([userTensor, productTensor], weightLabels, {
